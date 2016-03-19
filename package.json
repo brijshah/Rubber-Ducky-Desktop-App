@@ -1,0 +1,18 @@
+{
+  "name": "usb-rubber-ducky",
+  "version": "1.0.0",
+  "description": "desktop app for usb rubber ducky from hak5",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron-prebuilt": "^0.37.2"
+  },
+  "devDependencies": {
+    "electron-debug": "^0.2.0",
+    "gulp": "^3.9.0"
+  },
+  "author": "Brij Shah",
+  "license": "MIT"
+}
