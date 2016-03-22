@@ -3,8 +3,11 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
 var Menu = require("menu");
+var ipcMain = require('electron').ipcMain;
+var dialog = require('dialog');
 
 var mainWindow = null;
+var dialogWindow = null;
 
 app.on('ready', function() {
     var mainWindow = new BrowserWindow({
@@ -62,7 +65,9 @@ app.on('ready', function() {
                 })(),
                 click: function(item, focusedWindow) {
                   if (focusedWindow)
-                    focusedWindow.toggleDevTools();
+                    focusedWindow.toggleDevTools({
+                        detach : true
+                    });
                 }
             }
         ]},
@@ -75,6 +80,26 @@ app.on('ready', function() {
         ]}
     ];
     Menu.setApplicationMenu(Menu.buildFromTemplate(toolbar));
+
+    ipcMain.on('get-app-paths',function(event,arg){
+        var arr = {
+            "home"        : app.getPath("home"),
+            "appData"     : app.getPath("appData"),
+            "userData"    : app.getPath("userData"),
+            "cache"       : app.getPath("cache"),
+            "userCache"   : app.getPath("userCache"),
+            "temp"        : app.getPath("temp"),
+            "userDesktop" : app.getPath("userDesktop"),
+            "exe"         : app.getPath("exe"),
+            "module"      : app.getPath("module")
+        };
+        event.sender.send('return-app-paths',arr);
+    });
+
+    ipcMain.on('main-open-file',function(e,args){
+        var data = dialog.showOpenDialog(args);
+        mainWindow.webContents.send('returnDialogMainOpenFile',data);
+    });
 });
 
 // Quit when all windows are closed.

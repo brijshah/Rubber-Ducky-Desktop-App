@@ -48,13 +48,32 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Flash</h1>
-                        <p>This application allows you to create custom payloads for the USB Rubber Ducky. It also contains custom
-                        scripts for Windows, OSX and Linux.
-                        </p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                    <div class="col-md-12">
+                        <h1>
+                          <button id="menu-toggle" class="btn btn-default">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                          </button>
+                          Flash
+                        </h1>
+                        <p>First insert the ducky while continuously keeping the little black button pressed.This ensures that the ducky is in <code>_dfu-mode_;</code> which is required to update firmware.</p>
+                        <!-- <div class="btn-group-vertical" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" id="dumpbtn" data-toggle="tooltip" data-placement="right" data-original-title="Backup current firmware">Dump(backup)</button>
+
+                            <button type="button" class="btn btn-default" id="erasebtn" data-toggle="tooltip" data-placement="right" data-original-title="Reset functionality">Erase</button>
+
+                            <button type="button" class="btn btn-default" id="updatebtn" data-toggle="tooltip" data-placement="right" data-original-title="Erase all content including firmware">Update</button>
+
+                            <button type="button" class="btn btn-default" id="resetbtn" data-toggle="tooltip" data-placement="right" data-original-title="old">Reset</button>
+                        </div> -->
+                        <div class="panel panel-default">
+                          <div class="panel-body">
+                            To backup current firmware press:
+                            <button type="button" class="btn btn-default" id="dumpbtn" data-toggle="tooltip" data-placement="right" data-original-title="Backup current firmware">Dump(backup)</button>
+                            <br>
+                            To reset functionality press:
+                            <button type="button" class="btn btn-default" id="erasebtn" data-toggle="tooltip" data-placement="right" data-original-title="Reset functionality">Erase</button>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,12 +90,7 @@
     <script src="../assets/js/bootstrap.min.js"></script>
 
     <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
+    <script src="../scripts/flash.js"></script>
 
 </body>
 

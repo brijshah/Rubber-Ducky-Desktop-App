@@ -48,13 +48,162 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Payloads</h1>
+                    <div class="col-md-12">
+                        <h1>
+                          <button id="menu-toggle" class="btn btn-default">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                          </button>
+                          Payloads
+                        </h1>
                         <p>This application allows you to create custom payloads for the USB Rubber Ducky. It also contains custom
                         scripts for Windows, OSX and Linux.
                         </p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+
+                          <p>Select an operating system:</p>
+                          <form role="form">
+                            <label class="radio-inline">
+                              <input type="radio" name="optradio" id="winOption">Windows
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="optradio" id="osxOption">OSX
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="optradio" id="linuxOption">Linux
+                            </label>
+                          </form>
+
+                          <!-- Windows dropdowns -->
+                           <div class="btn-group" style="display:none" id="winRec">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Reconaissance</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">Computer Information</a></li>
+                               <li><a href="#">User Information</a></li>
+                               <li><a href="#">Drive Information</a></li>
+                               <li><a href="#">Program Information</a></li>
+                               <li><a href="#">Installed Updates</a></li>
+                               <li><a href="#">User Documents</a></li>
+                               <li><a href="#">Basic Network Information</a></li>
+                               <li><a href="#">Network Scan</a></li>
+                               <li><a href="#">Port Scan</a></li>
+                               <li><a href="#">Wireless Profile</a></li>
+                               <li><a href="#">Screen Capture</a></li>
+                               <li><a href="#">Extract SAM</a></li>
+                               <li><a href="#">Chrome Profile</a></li>
+                             </ul>
+                           </div>
+
+                           <div class="btn-group" style="display:none" id="winExp">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Exploit</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">Disable Firewall</a></li>
+                               <li><a href="#">Find & FTP</a></li>
+                               <li><a href="#">Add User</a></li>
+                               <li><a href="#">Open Port</a></li>
+                               <li><a href="#">Access Point</a></li>
+                               <li><a href="#">Share C Drive</a></li>
+                               <li><a href="#">Enable RDP</a></li>
+                               <li><a href="#">Reverse Shell</a></li>
+                               <li><a href="#">DNS Poison</a></li>
+                               <li><a href="#">Remove Windows Update</a></li>
+                             </ul>
+                           </div>
+
+                           <div class="btn-group" style="display:none" id="winReport">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Report Style</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">FTP Report</a></li>
+                               <li><a href="#">Local Report</a></li>
+                               <li><a href="#">Email Report</a></li>
+                               <li><a href="#">Save to USB</a></li>
+                             </ul>
+                           </div>
+                           <!-- End Windows Dropdowns -->
+
+                           <!-- OSX dropdowns -->
+                           <div class="btn-group" style="display:none" id="osxRec">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Reconaissance</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">Computer Information</a></li>
+                               <li><a href="#">User Information</a></li>
+                               <li><a href="#">USB Information</a></li>
+                               <li><a href="#">Drive Information</a></li>
+                               <li><a href="#">Program Information</a></li>
+                               <li><a href="#">Port Scan</a></li>
+                               <li><a href="#">Screen Capture</a></li>
+                               <li><a href="#">Chrome Profile</a></li>
+                               <li><a href="#">Firefox Profile</a></li>
+                             </ul>
+                           </div>
+
+                           <div class="btn-group" style="display:none" id="osxExp">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Exploit</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">Disable Firewall</a></li>
+                               <li><a href="#">Find & FTP</a></li>
+                               <li><a href="#">Add User</a></li>
+                               <li><a href="#">Reverse Shell</a></li>
+                               <li><a href="#">DNS Poison</a></li>
+                             </ul>
+                           </div>
+
+                           <div class="btn-group" style="display:none" id="osxReport">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Report Style</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">FTP Report</a></li>
+                               <li><a href="#">Local Report</a></li>
+                               <li><a href="#">Email Report</a></li>
+                               <li><a href="#">Save to USB</a></li>
+                             </ul>
+                           </div>
+                           <!-- End OSX Dropdowns -->
+
+                           <!-- Linux dropdowns -->
+                           <div class="btn-group" style="display:none" id="linuxRec">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Reconaissance</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">Computer Information</a></li>
+                               <li><a href="#">User Information</a></li>
+                               <li><a href="#">USB Information</a></li>
+                             </ul>
+                           </div>
+
+                           <div class="btn-group" style="display:none" id="linuxExp">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Exploit</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">Find & FTP</a></li>
+                               <li><a href="#">Reverse Shell</a></li>
+                               <li><a href="#">Third Item</a></li>
+                             </ul>
+                           </div>
+
+                           <div class="btn-group" style="display:none" id="linuxReport">
+                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                               <span data-bind="label">Report Style</span>&nbsp;<span class="caret"></span>
+                             </button>
+                             <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">FTP Report</a></li>
+                               <li><a href="#">Local Report</a></li>
+                               <li><a href="#">Email Report</a></li>
+                               <li><a href="#">Save to USB</a></li>
+                             </ul>
+                           </div>
+                           <!-- End Linux Dropdowns -->
                     </div>
                 </div>
             </div>
@@ -71,12 +220,7 @@
     <script src="../assets/js/bootstrap.min.js"></script>
 
     <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
+    <script src="../scripts/payloads.js"></script>
 
 </body>
 
