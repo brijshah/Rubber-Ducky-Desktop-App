@@ -6,6 +6,8 @@
 *.pid
 *.gz
 *.orig
+*.bin
+*.txt
 
 work
 pids
