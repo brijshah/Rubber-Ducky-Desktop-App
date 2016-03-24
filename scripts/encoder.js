@@ -1,6 +1,9 @@
 var fs = require('fs');
 var exec = require('child_process').exec;
 
+// JQuery requires window
+window.$ = window.jQuery = require('../assets/js/jquery.js');
+
 //hide download button until create has been clicked
 $('#downloadBin').hide();
 
@@ -20,5 +23,9 @@ $("#create-toggle").click(function(e) {
             console.log(err);
         }
     });
-    exec(`java -jar encoder.jar -i ./files/encoded/inject.txt -o ./files/encoded/inject.bin`);
+    exec(`java -jar encoder.jar -i ./files/encoded/inject.txt -o ./files/encoded/inject.bin`, function(error, stdout, stderr) {
+        console.log(error);
+        console.log(stdout);
+        console.log(stderr);
+    });
 });

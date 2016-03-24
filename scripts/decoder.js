@@ -1,4 +1,7 @@
 var ipcRenderer = require('electron').ipcRenderer;
+var exec = require('child_process').exec;
+
+window.$ = window.jQuery = require('../assets/js/jquery.js');
 
 //button to toggle tool menu
 $("#menu-toggle").click(function(e) {
@@ -19,11 +22,19 @@ $("#filepath").click(function(e) {
         var args = {
             title : title,
             properties : properties,
+            filters: [
+                { name: 'Binary Files', extensions: ['bin'] }
+            ],
             defaultPath : path
         }
         ipcRenderer.send('main-open-file',args);
         ipcRenderer.on('returnDialogMainOpenFile', function(event,data){
-            console.log(data[0]);
+            //console.log(data[0]);
+            exec(`python DuckDecoder.py decode ${data[0]}`, function(stdout, stderr) {
+                //console.log(stdout);
+                //console.log(stderr);
+                $("#duckscript").val(stderr);
+            });
         });
     });
 });

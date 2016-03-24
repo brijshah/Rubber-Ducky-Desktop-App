@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Paylods</title>
+        <title>Payloads</title>
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
         <link href='../assets/css/simple-sidebar.css' rel='stylesheet' type='text/css'>
@@ -75,40 +75,37 @@
                           <!-- Windows dropdowns -->
                            <div class="btn-group" style="display:none" id="winRec">
                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                               <span data-bind="label">Reconaissance</span>&nbsp;<span class="caret"></span>
+                               <span data-bind="label">Payloads</span>&nbsp;<span class="caret"></span>
                              </button>
-                             <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">Computer Information</a></li>
-                               <li><a href="#">User Information</a></li>
-                               <li><a href="#">Drive Information</a></li>
-                               <li><a href="#">Program Information</a></li>
-                               <li><a href="#">Installed Updates</a></li>
-                               <li><a href="#">User Documents</a></li>
-                               <li><a href="#">Basic Network Information</a></li>
-                               <li><a href="#">Network Scan</a></li>
-                               <li><a href="#">Port Scan</a></li>
-                               <li><a href="#">Wireless Profile</a></li>
-                               <li><a href="#">Screen Capture</a></li>
-                               <li><a href="#">Extract SAM</a></li>
-                               <li><a href="#">Chrome Profile</a></li>
-                             </ul>
-                           </div>
+                             <ul class="dropdown-menu scrollable-menu" role="menu">
+                               <li class="dropdown-header">Reconaissance</li>
+                               <li data-value="compinfo"><a href="#">Computer Information</a></li>
+                               <li data-value="driveinfo"><a href="#">User Information</a></li>
+                               <li data-value="userinfo"><a href="#">Drive Information</a></li>
+                               <li data-value="driveinfo"><a href="#">Program Information</a></li>
+                               <li data-value="installedupdates"><a href="#">Installed Updates</a></li>
+                               <li data-value="userdocs"><a href="#">User Documents</a></li>
+                               <li data-value="netinfo"><a href="#">Basic Network Information</a></li>
+                               <li data-value="netscan"><a href="#">Network Scan</a></li>
+                               <li data-value="portscan"><a href="#">Port Scan</a></li>
+                               <li data-value="wirelessprofile"><a href="#">Wireless Profile</a></li>
+                               <li data-value="screencap"><a href="#">Screen Capture</a></li>
+                               <li data-value="extractsam"><a href="#">Extract SAM</a></li>
+                               <li data-value="chromeprofile"><a href="#">Chrome Profile</a></li>
 
-                           <div class="btn-group" style="display:none" id="winExp">
-                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                               <span data-bind="label">Exploit</span>&nbsp;<span class="caret"></span>
-                             </button>
-                             <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">Disable Firewall</a></li>
-                               <li><a href="#">Find & FTP</a></li>
-                               <li><a href="#">Add User</a></li>
-                               <li><a href="#">Open Port</a></li>
-                               <li><a href="#">Access Point</a></li>
-                               <li><a href="#">Share C Drive</a></li>
-                               <li><a href="#">Enable RDP</a></li>
-                               <li><a href="#">Reverse Shell</a></li>
-                               <li><a href="#">DNS Poison</a></li>
-                               <li><a href="#">Remove Windows Update</a></li>
+                               <li class="divider"></li>
+
+                               <li class="dropdown-header">Exploits</li>
+                               <li data-value="disablefirewall"><a href="#">Disable Firewall</a></li>
+                               <li data-value="findftp"><a href="#">Find & FTP</a></li>
+                               <li data-value="adduser"><a href="#">Add User</a></li>
+                               <li data-value="openport"><a href="#">Open Port</a></li>
+                               <li data-value="accesspoint"><a href="#">Access Point</a></li>
+                               <li data-value="cdrive"><a href="#">Share C Drive</a></li>
+                               <li data-value="rdp"><a href="#">Enable RDP</a></li>
+                               <li data-value="reverseshell"><a href="#">Reverse Shell</a></li>
+                               <li data-value="dns"><a href="#">DNS Poison</a></li>
+                               <li data-value="removewinupdates"><a href="#">Remove Windows Update</a></li>
                              </ul>
                            </div>
 
@@ -117,10 +114,10 @@
                                <span data-bind="label">Report Style</span>&nbsp;<span class="caret"></span>
                              </button>
                              <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">FTP Report</a></li>
-                               <li><a href="#">Local Report</a></li>
-                               <li><a href="#">Email Report</a></li>
-                               <li><a href="#">Save to USB</a></li>
+                               <li data-value="ftp"><a href="#" id="winFTP">FTP Report</a></li>
+                               <li data-value="local"><a href="#" id="winLocal">Local Report</a></li>
+                               <li data-value="email"><a href="#" id="winEmail">Email Report</a></li>
+                               <li data-value="usb"><a href="#" id="winUSB">Save to USB</a></li>
                              </ul>
                            </div>
                            <!-- End Windows Dropdowns -->
@@ -128,31 +125,27 @@
                            <!-- OSX dropdowns -->
                            <div class="btn-group" style="display:none" id="osxRec">
                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                               <span data-bind="label">Reconaissance</span>&nbsp;<span class="caret"></span>
+                               <span data-bind="label">Payloads</span>&nbsp;<span class="caret"></span>
                              </button>
                              <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">Computer Information</a></li>
-                               <li><a href="#">User Information</a></li>
-                               <li><a href="#">USB Information</a></li>
-                               <li><a href="#">Drive Information</a></li>
-                               <li><a href="#">Program Information</a></li>
-                               <li><a href="#">Port Scan</a></li>
-                               <li><a href="#">Screen Capture</a></li>
-                               <li><a href="#">Chrome Profile</a></li>
-                               <li><a href="#">Firefox Profile</a></li>
-                             </ul>
-                           </div>
+                               <li data-value="compinfo"><a href="#">Computer Information</a></li>
+                               <li data-value="userinfo"><a href="#">User Information</a></li>
+                               <li data-value="usbinfo"><a href="#">USB Information</a></li>
+                               <li data-value="driveinfo"><a href="#">Drive Information</a></li>
+                               <li data-value="programinfo"><a href="#">Program Information</a></li>
+                               <li data-value="portscan"><a href="#">Port Scan</a></li>
+                               <li data-value="screencap"><a href="#">Screen Capture</a></li>
+                               <li data-value="chromeprofile"><a href="#">Chrome Profile</a></li>
+                               <li data-value="firefoxprofile"><a href="#">Firefox Profile</a></li>
 
-                           <div class="btn-group" style="display:none" id="osxExp">
-                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                               <span data-bind="label">Exploit</span>&nbsp;<span class="caret"></span>
-                             </button>
-                             <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">Disable Firewall</a></li>
-                               <li><a href="#">Find & FTP</a></li>
-                               <li><a href="#">Add User</a></li>
-                               <li><a href="#">Reverse Shell</a></li>
-                               <li><a href="#">DNS Poison</a></li>
+                               <li class="divider"></li>
+
+                               <li class="dropdown-header">Exploits</li>
+                               <li data-value="disablefirewall"><a href="#">Disable Firewall</a></li>
+                               <li data-value="findftp"><a href="#">Find & FTP</a></li>
+                               <li data-value="adduser"><a href="#">Add User</a></li>
+                               <li data-value="reverseshell"><a href="#">Reverse Shell</a></li>
+                               <li data-value="dnspoison"><a href="#">DNS Poison</a></li>
                              </ul>
                            </div>
 
@@ -161,10 +154,10 @@
                                <span data-bind="label">Report Style</span>&nbsp;<span class="caret"></span>
                              </button>
                              <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">FTP Report</a></li>
-                               <li><a href="#">Local Report</a></li>
-                               <li><a href="#">Email Report</a></li>
-                               <li><a href="#">Save to USB</a></li>
+                               <li data-value="ftp"><a href="#">FTP Report</a></li>
+                               <li data-value="local"><a href="#">Local Report</a></li>
+                               <li data-value="email"><a href="#">Email Report</a></li>
+                               <li data-value="usb"><a href="#">Save to USB</a></li>
                              </ul>
                            </div>
                            <!-- End OSX Dropdowns -->
@@ -172,23 +165,19 @@
                            <!-- Linux dropdowns -->
                            <div class="btn-group" style="display:none" id="linuxRec">
                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                               <span data-bind="label">Reconaissance</span>&nbsp;<span class="caret"></span>
+                               <span data-bind="label">Payloads</span>&nbsp;<span class="caret"></span>
                              </button>
                              <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">Computer Information</a></li>
-                               <li><a href="#">User Information</a></li>
-                               <li><a href="#">USB Information</a></li>
-                             </ul>
-                           </div>
+                               <li data-value="compinfo"><a href="#">Computer Information</a></li>
+                               <li data-value="userinfo"><a href="#">User Information</a></li>
+                               <li data-value="usbinfo"><a href="#">USB Information</a></li>
 
-                           <div class="btn-group" style="display:none" id="linuxExp">
-                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                               <span data-bind="label">Exploit</span>&nbsp;<span class="caret"></span>
-                             </button>
-                             <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">Find & FTP</a></li>
-                               <li><a href="#">Reverse Shell</a></li>
-                               <li><a href="#">Third Item</a></li>
+                               <li class="divider"></li>
+
+                               <li class="dropdown-header">Exploits</li>
+
+                               <li data-value="findftp"><a href="#">Find & FTP</a></li>
+                               <li data-value="reverseshell"><a href="#">Reverse Shell</a></li>
                              </ul>
                            </div>
 
@@ -197,13 +186,23 @@
                                <span data-bind="label">Report Style</span>&nbsp;<span class="caret"></span>
                              </button>
                              <ul class="dropdown-menu" role="menu">
-                               <li><a href="#">FTP Report</a></li>
-                               <li><a href="#">Local Report</a></li>
-                               <li><a href="#">Email Report</a></li>
-                               <li><a href="#">Save to USB</a></li>
+                               <li data-value="ftp"><a href="#">FTP Report</a></li>
+                               <li data-value="local"><a href="#">Local Report</a></li>
+                               <li data-value="email"><a href="#">Email Report</a></li>
+                               <li data-value="usb"><a href="#">Save to USB</a></li>
                              </ul>
                            </div>
                            <!-- End Linux Dropdowns -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class ="col-sm-8">
+                        <br>
+                        <button type="button" class="btn btn-default" id="create-payload">
+                          <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Create .Bin
+                        </button>
+                        <a class="btn btn-default" id="downloadBin" download href="#">Save Payload</a>
                     </div>
                 </div>
             </div>
@@ -223,5 +222,4 @@
     <script src="../scripts/payloads.js"></script>
 
 </body>
-
 </html>

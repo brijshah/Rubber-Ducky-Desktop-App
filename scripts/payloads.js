@@ -1,7 +1,5 @@
-// //hide options
-// $("#winRec").hide();
-// $("#winExp").hide();
-// $("#winReport").hide();
+// Hide download button until payload is generated
+$('#downloadBin').hide();
 
 //Menu toggle
 $("#menu-toggle").click(function(e) {
@@ -9,6 +7,7 @@ $("#menu-toggle").click(function(e) {
     $("#wrapper").toggleClass("toggled");
 });
 
+// toggle windows payloads and hide others
 $("#winOption").click(function(){
     osxHide();
     linuxHide();
@@ -17,9 +16,7 @@ $("#winOption").click(function(){
     $("#winReport").show();
 });
 
-// osxOption click event
-// hide
-// show osx stuff
+//toggle osx payloads and hide others
 $("#osxOption").click(function() {
     winHide();
     linuxHide();
@@ -28,9 +25,7 @@ $("#osxOption").click(function() {
     $("#osxReport").show();
 });
 
-// linuxOption click event
-// hide()
-// show linux stuff
+//toggle linux payloads and hide others
 $("#linuxOption").click(function() {
     winHide();
     osxHide();
@@ -40,7 +35,6 @@ $("#linuxOption").click(function() {
 });
 
 var winHide = function() {
-    // win hide
     $("#winRec").hide();
     $("#winExp").hide();
     $("#winReport").hide();
@@ -57,3 +51,51 @@ var linuxHide = function() {
     $("#linuxExp").hide();
     $("#linuxReport").hide();
 }
+
+// Click handler
+$("#create-payload").click(function(){
+    // Get the selected platform
+    // => "osx", "linux", "win"
+    var platformSelected = $("input[name=optradio]:checked").attr("id").replace("Option", ""); // "osx", "linux", "win"
+
+    // Get the dropdown element for that selected platform
+    var $dropdown = $("#" + platformSelected + "Rec").find(".dropdown-menu");
+
+    // Get the selected value in the dropdown
+    var recValue = $dropdown.data("value");
+
+    // Get the divider and selected option elements
+    var $divider = $("li.divider", $dropdown);
+    var $selectedValue = $("li[data-value='" + recValue + "']", $dropdown);
+
+    // Get the report value (from the second dropdown)
+    var reportValue = $("#" + platformSelected + "Report").find(".dropdown-menu").data("value");
+
+    // Handle the win -> windows case
+    var os = platformSelected;
+    if (os === "win") {
+        os = "windows";
+    }
+
+    // Get the type (exploit or recon)
+    var type = $selectedValue.index() > $divider.index() ? "exploit" : "recon";
+
+    // Build the path
+    var path = "../files/payloads/" + os + "/" + type + "/" + recValue + "/" + reportValue + "/inject.zip";
+
+    console.log(path);
+
+    // Set the path and show the download button button
+    $("#downloadBin").attr("href", path).show();
+});
+
+// Set the value on the dropdown
+$(".dropdown-menu li > a").on("click", function () {
+   var $this = $(this);
+   var $li = $this.closest("li");
+   var value = $li.data("value");
+   if (!value) { return; }
+   $this.closest(".dropdown-menu").attr("data-value", value);
+   // Update the selected item
+   $this.closest(".btn-group").find("span[data-bind='label']").text($this.text());
+});
