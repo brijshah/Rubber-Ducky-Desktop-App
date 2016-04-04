@@ -23,7 +23,9 @@ $("#create-toggle").click(function(e) {
             }
         });
 
-        exec(`java -jar encoder.jar -i ${data}/inject.txt -o ${data}/inject.bin`, function(error, stdout, stderr) {
+        exec(`java -jar encoder.jar -i ${data}/inject.txt -o ${data}/inject.bin`, function(err, stdout, stderr) {
+            err = stderr || err;
+            if (err) { return alert("There was an error: " + err); }
             console.log(stdout);
             if (stdout) {
                 $("#message").text(stdout);

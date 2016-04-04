@@ -1,6 +1,7 @@
 var os = require('os');
 var exec = require('child_process').exec;
 var sudo = require("electron-sudo");
+var shell = require('node-powershell');
 
 // Get the UI elements from the DOM (using jQuery)
 var $errorMessage = $(".process-error.alert")
@@ -8,6 +9,23 @@ var $errorMessage = $(".process-error.alert")
   , $info = $("#info")
   , $volumeName = $("#volumename")
   ;
+
+
+function execWin (command, cb) {
+    var PS = new shell(command);
+    var stdout = "";
+
+    PS.on("end", function (code) {
+        if (code !== 0) {
+            return cb(new Error("Failed to run the command."), "", "");
+        }
+        cb(null, stdout, "");
+    });
+
+    PS.on('output', function(data) {
+        stdout += data;
+    });
+}
 
 // menu toggle
 $("#menu-toggle").click(function(e) {
@@ -32,7 +50,7 @@ function listUsb (cb) {
     } else if (process.platform === 'linux') {
         exec("lsblk", cb);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
-        exec("powershell.exe",["GET-WMIOBJECT win32_diskdrive | Where { $_.InterfaceType –eq 'USB' }"], cb);
+        execWin("gwmi cim_logicaldisk | ? drivetype -eq 2", cb);
     } else {
         cb("Error obtaining device list. Try Again.");
     }
@@ -80,8 +98,8 @@ function ejectUSB (volume, cb) {
     } else if (process.platform === 'linux') {
         sudo.exec("eject /dev/" + volume, cb);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
-        exec("powershell.exe", ["$driveEject = New-Object -comObject Shell.Application"], cb);
-        exec("powershell.exe", ["$driveEject.Namespace(17).ParseName(\"E:\").InvokeVerb(\"Eject\")"], cb);
+        execWin("$driveEject = New-Object -comObject Shell.Application; $driveEject.Namespace(17).ParseName(\"" + volume + "\").InvokeVerb(\"Eject\"); echo '';", cb);
+       // execWin("", cb);
     } else {
         cb("This platform is not supported.");
     }
