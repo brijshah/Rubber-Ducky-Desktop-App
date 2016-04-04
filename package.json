@@ -7,7 +7,8 @@
     "start": "electron ."
   },
   "dependencies": {
-    "electron-prebuilt": "^0.37.2"
+    "electron-prebuilt": "^0.37.2",
+    "electron-sudo": "^3.0.3"
   },
   "devDependencies": {
     "electron-debug": "^0.2.0",

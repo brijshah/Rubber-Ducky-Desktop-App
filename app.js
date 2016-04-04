@@ -81,7 +81,7 @@ app.on('ready', function() {
     ];
     Menu.setApplicationMenu(Menu.buildFromTemplate(toolbar));
 
-    ipcMain.on('get-app-paths',function(event,arg){
+    ipcMain.on('get-app-paths',function(event,arg) {
         var arr = {
             "home"        : app.getPath("home"),
             "appData"     : app.getPath("appData"),
@@ -99,6 +99,11 @@ app.on('ready', function() {
     ipcMain.on('main-open-file',function(e,args){
         var data = dialog.showOpenDialog(args);
         mainWindow.webContents.send('returnDialogMainOpenFile',data);
+    });
+
+    ipcMain.on('get-home-path', function(event, arg) {
+        var path = app.getPath("home");
+        event.sender.send('return-home-path', path);
     });
 });
 

@@ -56,24 +56,49 @@
                           Flash
                         </h1>
                         <p>First insert the ducky while continuously keeping the little black button pressed.This ensures that the ducky is in <code>_dfu-mode_;</code> which is required to update firmware.</p>
-                        <!-- <div class="btn-group-vertical" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" id="dumpbtn" data-toggle="tooltip" data-placement="right" data-original-title="Backup current firmware">Dump(backup)</button>
 
-                            <button type="button" class="btn btn-default" id="erasebtn" data-toggle="tooltip" data-placement="right" data-original-title="Reset functionality">Erase</button>
+                        <!-- Alert Message -->
+                        <div class="process-output-alert alert alert-dismissible hide" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong class="alert-type-msg"></strong> <span class="alert-message"></span>
+                        </div>
+                        <!-- End Alert Message -->
 
-                            <button type="button" class="btn btn-default" id="updatebtn" data-toggle="tooltip" data-placement="right" data-original-title="Erase all content including firmware">Update</button>
-
-                            <button type="button" class="btn btn-default" id="resetbtn" data-toggle="tooltip" data-placement="right" data-original-title="old">Reset</button>
-                        </div> -->
+                       <!--  Backup Panel -->
                         <div class="panel panel-default">
                           <div class="panel-body">
-                            To backup current firmware press:
-                            <button type="button" class="btn btn-default" id="dumpbtn" data-toggle="tooltip" data-placement="right" data-original-title="Backup current firmware">Dump(backup)</button>
-                            <br>
-                            To reset functionality press:
-                            <button type="button" class="btn btn-default" id="erasebtn" data-toggle="tooltip" data-placement="right" data-original-title="Reset functionality">Erase</button>
+                            <h4>Dump (Backup) Current Firmware</h4>
+                            <ul style="list-style-type:none; margin: 0; padding: 0">
+                                <li style="line-height: 3em; margin: 0; padding: 0">
+                                    To dump firmware, press: <button type="button" class="btn btn-default pull-right" id="dumpbtn">Dump</button>
+                                </li>
+                                <li style="line-height: 3em">
+                                    To restart Ducky, press: <button type="button" class="btn btn-default pull-right" id="dresetbtn">Reset</button>
+                                </li>
+                            </ul>
                           </div>
                         </div>
+                       <!--  End Backup Panel -->
+
+                       <!--  Update Panel -->
+                        <div class="panel panel-default">
+                          <div class="panel-body">
+                            <h4>Update Firmware</h4>
+                            <ul style="list-style-type:none; margin: 0; padding: 0">
+                                <li style="line-height: 3em; margin: 0; padding: 0">
+                                    To erase Ducky, press: <button type="button" class="btn btn-default pull-right" id="erasebtn">Erase</button>
+                                </li>
+                                <li style="line-height: 3em">
+                                    To update Ducky, press: <button type="button" class="btn btn-default pull-right" id="updatebtn">Update</button>
+                                </li>
+                                <li style="line-height: 3em">
+                                    To restart Ducky, press: <button type="button" class="btn btn-default pull-right" id="uresetbtn">Reset</button>
+                                </li>
+                            </ul>
+                          </div>
+                        </div>
+                       <!--  End Update Panel -->
+
                     </div>
                 </div>
             </div>

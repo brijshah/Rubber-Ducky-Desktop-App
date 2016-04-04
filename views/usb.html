@@ -3,15 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Encoder</title>
+        <title>About</title>
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
         <link href='../assets/css/simple-sidebar.css' rel='stylesheet' type='text/css'>
         <link href='../assets/css/main.css' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script>
             window.$ = window.jQuery = require('../assets/js/jquery.js');
         </script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     </head>
 <body>
     <div id="wrapper">
@@ -23,7 +23,7 @@
                     <a href="../index.html">Tools</a>
                 </li>
                 <li>
-                    <a href="#">Encoder</a>
+                    <a href="encoder.html">Encoder</a>
                 </li>
                 <li>
                     <a href="decoder.html">Decoder</a>
@@ -35,7 +35,10 @@
                     <a href="flash.html">Flash</a>
                 </li>
                 <li>
-                    <a href="about.html">About</a>
+                    <a href="#">USB</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
                 </li>
                 <li>
                     <a href="resources.html">Resources</a>
@@ -53,45 +56,39 @@
                           <button id="menu-toggle" class="btn btn-default">
                             <span class="glyphicon glyphicon-align-justify"></span>
                           </button>
-                          Encoder
+                          USB
                         </h1>
-                        <p>Write your Ducky Script below. Press the Encode button when ready.
-                        </p>
-                        <textarea style="font-family:monospace;" class="form-control"  id="duckscript" rows="10" placeholder="Enter Ducky Script here"></textarea>
-                        <br>
+                        <p>Check USB device information here.</p>
+
+                        <div class="process-error alert alert-danger alert-dismissible hide" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Error!</strong> <span class="error-message"></span>
+                        </div>
+                        <div class="process-success alert alert-success alert-dismissible hide" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Success!</strong> <span class="success-message"></span>
+                        </div>
+                        <pre id="info"></pre>
+
+                        <button type="button" class="btn btn-default" id="listbtn">List Devices</button>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class ="col-sm-8">
-                        <button type="button" class="btn btn-default" id="create-toggle">
-                          <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Create .Bin
-                        </button>
-                    </div>
+                    <div class="col-lg-6">
+                    <br>
+                        <p>To Eject a device, type in its Volume Name below:</p>
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Media Volume Name.." id="volumename">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="ejectbtn">Eject</button>
+                          </span>
+                        </div><!-- /input-group -->
+                      </div><!-- /.col-lg-6 -->
                 </div>
-
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-
-        <!-- Message Modal -->
-        <div class="modal fade" id="myModal">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h4 class="modal-title">Message</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="message"></p>
-                    <p id="message2"></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
 
     </div>
     <!-- /#wrapper -->
@@ -102,7 +99,9 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="../assets/js/bootstrap.min.js"></script>
 
-    <!-- Encoder Script -->
-    <script src="../scripts/encoder.js"></script>
+    <!-- Menu Toggle Script -->
+    <script src="../scripts/usb.js"></script>
+
 </body>
+
 </html>

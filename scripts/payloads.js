@@ -52,6 +52,12 @@ var linuxHide = function() {
     $("#linuxReport").hide();
 }
 
+function getType ($selectedValue) {
+    // Get the divider and selected option elements
+    var $divider = $("li.divider", $selectedValue.parent());
+    return $selectedValue.index() > $divider.index() ? "exploit" : "recon";
+}
+
 // Click handler
 $("#create-payload").click(function(){
     // Get the selected platform
@@ -62,10 +68,9 @@ $("#create-payload").click(function(){
     var $dropdown = $("#" + platformSelected + "Rec").find(".dropdown-menu");
 
     // Get the selected value in the dropdown
-    var recValue = $dropdown.data("value");
+    var recValue = $dropdown.attr("data-value");
 
-    // Get the divider and selected option elements
-    var $divider = $("li.divider", $dropdown);
+
     var $selectedValue = $("li[data-value='" + recValue + "']", $dropdown);
 
     // Get the report value (from the second dropdown)
@@ -78,15 +83,33 @@ $("#create-payload").click(function(){
     }
 
     // Get the type (exploit or recon)
-    var type = $selectedValue.index() > $divider.index() ? "exploit" : "recon";
+    var type = getType($selectedValue);
 
     // Build the path
-    var path = "../files/payloads/" + os + "/" + type + "/" + recValue + "/" + reportValue + "/inject.zip";
+    var path = "../files/payloads/" + os + "/" + type + "/" + recValue + (type === "recon" ? "/" + reportValue : "") + "/inject.zip";
 
     console.log(path);
 
     // Set the path and show the download button button
     $("#downloadBin").attr("href", path).show();
+});
+
+// Get the dropdown menu elements and listen for value-chosen (which is triggered when selecting the value)
+$("#winRec,#linuxRec,#osxRec").find(".dropdown-menu").on("value-chosen", function (e, $selectedValue) {
+    var $dropdown = $(this);
+
+    // Select the other dropdown
+    var $reportDropdown = $dropdown.closest(".btn-group").next();
+
+    // Get the type (exploit or recon)
+    var type = getType($selectedValue);
+
+    // Based on the type hide/show the report dropdown elm
+    if (type === "exploit") {
+        $reportDropdown.hide();
+    } else {
+        $reportDropdown.show();
+    }
 });
 
 // Set the value on the dropdown
@@ -95,7 +118,9 @@ $(".dropdown-menu li > a").on("click", function () {
    var $li = $this.closest("li");
    var value = $li.data("value");
    if (!value) { return; }
-   $this.closest(".dropdown-menu").attr("data-value", value);
+   var $dropdown = $this.closest(".dropdown-menu");
+   $dropdown.attr("data-value", value);
    // Update the selected item
    $this.closest(".btn-group").find("span[data-bind='label']").text($this.text());
+   $dropdown.trigger("value-chosen", [$li]);
 });
