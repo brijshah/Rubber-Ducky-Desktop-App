@@ -35,7 +35,7 @@ $("#dumpbtn").click(function(){
         if (process.platform === 'darwin') {
             exec(`dfu-programmer at32uc3b1256 dump > ${data}/dump.bin`, showProcessOutput);
         } else if (process.platform === 'linux') {
-
+            exec(`dfu-programmer at32uc3b1256 dump > ${data}/dump.bin`, showProcessOutput);
         } else if (process.platform === 'win32' || process.platform === 'win64') {
 
         }
@@ -47,7 +47,7 @@ $("#erasebtn").click(function(){
     if (process.platform === 'darwin') {
         exec("dfu-programmer at32uc3b1256 erase", showProcessOutput);
     } else if (process.platform === 'linux') {
-
+        exec("dfu-programmer at32uc3b1256 erase", showProcessOutput);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
 
     } else {
@@ -76,7 +76,15 @@ $("#updatebtn").click(function(e){
         ipcRenderer.send('main-open-file',args);
         ipcRenderer.on('returnDialogMainOpenFile', function(event,data){
             //console.log("parameters from the dialog:",data);
-            exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
+            if (process.platform === 'darwin') {
+                exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
+            } else if (process.platform === 'linux') {
+                exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
+            } else if (process.platform === 'win32' || process.platform === 'win64') {
+
+            } else {
+                //alert
+            }
         });
     });
 });
@@ -86,7 +94,7 @@ $("#dresetbtn, #uresetbtn").click(function(){
     if (process.platform === 'darwin') {
         exec("dfu-programmer at32uc3b1256 reset", showProcessOutput);
     } else if (process.platform === 'linux') {
-
+        exec("dfu-programmer at32uc3b1256 reset", showProcessOutput);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
 
     } else {
