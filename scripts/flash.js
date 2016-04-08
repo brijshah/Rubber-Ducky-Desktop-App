@@ -14,6 +14,7 @@ $("#menu-toggle").click(function(e) {
     $("#wrapper").toggleClass("toggled");
 });
 
+//displays error or success message based on results from command
 function showErrorOrSuccess (err, data) {
     $outputAlert.hide().removeClass("hide alert-danger alert-success");
     $outputAlert.addClass("alert-" + (err ? "danger" : "success")).fadeIn();
@@ -21,6 +22,7 @@ function showErrorOrSuccess (err, data) {
     $alertMessage.text(err || data);
 }
 
+//checks the type of output from a command that is run
 function checkOutput (cb) {
     return function (err, stdout, stderr) {
         cb(stderr || err, stdout);
