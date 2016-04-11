@@ -1,7 +1,7 @@
 var os = require('os');
 var exec = require('child_process').exec;
 var sudo = require("electron-sudo");
-var shell = require('node-powershell');
+var shell = require('powershell');
 
 // Get the UI elements from the DOM (using jQuery)
 var $errorMessage = $(".process-error.alert")
@@ -10,17 +10,22 @@ var $errorMessage = $(".process-error.alert")
   , $volumeName = $("#volumename")
   ;
 
-
 function execWin (command, cb) {
     var PS = new shell(command);
     var stdout = "";
+    var stderr = "";
 
     PS.on("end", function (code) {
         if (code !== 0) {
             return cb(new Error("Failed to run the command."), "", "");
         }
-        cb(null, stdout, "");
+        cb(stderr || null, stdout, "");
     });
+
+    PS.on("error-output", function (data) {
+        stderr += data;
+    });
+
 
     PS.on('output', function(data) {
         stdout += data;
