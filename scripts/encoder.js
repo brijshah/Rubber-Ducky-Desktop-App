@@ -9,21 +9,36 @@ $("#menu-toggle").click(function(e) {
 });
 
 //button to create .bin file
-$("#create-toggle").click(function(e) {
+var $createBtn = $("#create-toggle");
+var $textarea = $('#duckscript');
+
+$createBtn.click(function(e) {
     e.preventDefault();
-    var text = $('#duckscript').val();
-
     ipcRenderer.send('get-home-path');
-    ipcRenderer.on('return-home-path', function(event, data) {
-        var homePath = data;
+});
 
-        fs.writeFile(`${data}/inject.txt`, text, function(err){
-            if (err) {
-                console.log(err);
-            }
-        });
+$textarea.on("input", checkCreateBtnState);
 
+function checkCreateBtnState (enable) {
+    if (enable === false && enable !== true || $textarea.val().trim()) {
+        $createBtn.removeAttr("disabled");
+    } else {
+        $createBtn.attr("disabled", "disabled");
+    }
+}
+checkCreateBtnState();
+
+ipcRenderer.on('return-home-path', function(event, data) {
+    var homePath = data;
+
+    checkCreateBtnState(false);
+
+    fs.writeFile(`${data}/inject.txt`, $textarea.val(), function(err){
+        if (err) {
+            return alert("There was an error: " + err.message);
+        }
         exec(`java -jar encoder.jar -i ${data}/inject.txt -o ${data}/inject.bin`, function(err, stdout, stderr) {
+            checkCreateBtnState(true);
             err = stderr || err;
             if (err) { return alert("There was an error: " + err); }
             //console.log(stdout);

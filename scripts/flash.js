@@ -57,6 +57,17 @@ function showErrorOrSuccess (err, data) {
 //checks the type of output from a command that is run
 function checkOutput (cb) {
     return function (err, stdout, stderr) {
+        // If the stderr contains "Validating...", then that's not an error
+        if (stderr && /Validating\.\.\./.test(stderr)) {
+            // Move the stderr content in stdout
+            stdout = stderr;
+
+            // Empty the stderr
+            stderr = "";
+
+            // Nulify the err obj
+            err = null;
+        }
         cb(stderr || err, stdout);
     };
 }
@@ -65,7 +76,6 @@ function checkOutput (cb) {
 $("#dumpbtn").click(function(){
     disableButtons();
     ipcRenderer.send('get-home-path');
-
 });
 
 ipcRenderer.on('return-home-path', function(event, data) {
@@ -98,6 +108,7 @@ $("#erasebtn").click(function(){
 function disableButtons () {
     $execButtons.attr("disabled", "disabled");
 }
+
 // Enable the buttons (function)
 function enableButtons () {
     $execButtons.removeAttr("disabled");
@@ -106,7 +117,6 @@ function enableButtons () {
 //button action to receive filepath for update
 $("#updatebtn").click(function(e){
     e.preventDefault();
-
     ipcRenderer.send('get-app-paths');
 });
 
@@ -124,19 +134,20 @@ ipcRenderer.on('return-app-paths',function(event,data){
         defaultPath : path
     };
     ipcRenderer.send('main-open-file',args);
-    ipcRenderer.on('returnDialogMainOpenFile', function(event,data){
-        disableButtons();
-        //console.log("parameters from the dialog:",data);
-        if (process.platform === 'darwin') {
-            exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
-        } else if (process.platform === 'linux') {
-            exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
-        } else if (process.platform === 'win32' || process.platform === 'win64') {
+});
 
-        } else {
-            checkOutput("Error updating Ducky.");
-        }
-    });
+ipcRenderer.on('returnDialogMainOpenFile', function(event,data){
+    disableButtons();
+    //console.log("parameters from the dialog:",data);
+    if (process.platform === 'darwin') {
+        exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
+    } else if (process.platform === 'linux') {
+        exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
+    } else if (process.platform === 'win32' || process.platform === 'win64') {
+
+    } else {
+        checkOutput("Error updating Ducky.");
+    }
 });
 
 //reset button action
