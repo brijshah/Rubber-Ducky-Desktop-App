@@ -1,7 +1,8 @@
 var os = require('os');
 var exec = require('child_process').exec;
 var sudo = require("electron-sudo");
-var shell = require('powershell');
+var execWin = require("../scripts/exec-win");
+var isRoot = require('is-root');
 
 // Get the UI elements from the DOM (using jQuery)
 var $errorMessage = $(".process-error.alert")
@@ -9,28 +10,6 @@ var $errorMessage = $(".process-error.alert")
   , $info = $("#info")
   , $volumeName = $("#volumename")
   ;
-
-function execWin (command, cb) {
-    var PS = new shell(command);
-    var stdout = "";
-    var stderr = "";
-
-    PS.on("end", function (code) {
-        if (code !== 0) {
-            return cb(new Error("Failed to run the command."), "", "");
-        }
-        cb(stderr || null, stdout, "");
-    });
-
-    PS.on("error-output", function (data) {
-        stderr += data;
-    });
-
-
-    PS.on('output', function(data) {
-        stdout += data;
-    });
-}
 
 // menu toggle
 $("#menu-toggle").click(function(e) {
@@ -101,7 +80,11 @@ function ejectUSB (volume, cb) {
     if (process.platform === 'darwin') {
         exec(`diskutil eject /Volumes/${volume}`, cb);
     } else if (process.platform === 'linux') {
-        sudo.exec("eject /dev/" + volume, cb);
+        if(isRoot) {
+            exec("eject /dev/" + volume, cb);
+        } else {
+            sudo.exec("eject /dev/" + volume, cb);
+        }
     } else if (process.platform === 'win32' || process.platform === 'win64') {
         execWin("$driveEject = New-Object -comObject Shell.Application; $driveEject.Namespace(17).ParseName(\"" + volume + "\").InvokeVerb(\"Eject\"); echo '';", cb);
        // execWin("", cb);
@@ -113,6 +96,11 @@ function ejectUSB (volume, cb) {
 $("#ejectbtn").click(function() {
     // Eject the USB
     ejectUSB($volumeName.val(), function (err, data) {
+
+        if(err && /^You cannot call a method on a null\-valued expression/.test(err)) {
+            err = "USB not found.";
+        }
+
         // ...and after trying to eject the volume
         // check for error and show it (if there is one)
         if (err) { return updateProcessOutputInUi(err); }

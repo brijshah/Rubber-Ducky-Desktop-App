@@ -1,7 +1,7 @@
 var ipcRenderer = require('electron').ipcRenderer;
 var exec = require('child_process').exec;
 var os = require('os');
-var shell = require('powershell');
+var execWin = require("../scripts/exec-win");
 
 var showProcessOutput = checkOutput(showErrorOrSuccess);
 var $outputAlert = $(".process-output-alert")
@@ -22,29 +22,6 @@ $("#menu-toggle").click(function(e) {
     $("#wrapper").toggleClass("toggled");
 });
 
-function execWin (command, cb) {
-    var PS = new shell(command);
-    var stdout = "";
-    var stderr = "";
-
-    PS.on("end", function (code) {
-        if (code !== 0) {
-            return cb(new Error("Failed to run the command."), "", "");
-        }
-        // Send the error  in the callback
-        cb(stderr || null, stdout, "");
-    });
-
-    // Listen stderr data (errors from the child process)
-    PS.on("error-output", function (data) {
-        stderr += data;
-    });
-
-    PS.on('output', function(data) {
-        stdout += data;
-    });
-}
-
 //displays error or success message based on results from command
 function showErrorOrSuccess (err, data) {
     $outputAlert.hide().removeClass("hide alert-danger alert-success");
@@ -60,7 +37,7 @@ function checkOutput (cb) {
         // If the stderr contains "Validating...", then that's not an error
         if (stderr && /Validating\.\.\./.test(stderr)) {
             // Move the stderr content in stdout
-            stdout = stderr;
+            stdout = stderr.substring(stderr.indexOf("Validating..."));
 
             // Empty the stderr
             stderr = "";
@@ -86,7 +63,7 @@ ipcRenderer.on('return-home-path', function(event, data) {
     } else if (process.platform === 'linux') {
         exec(`dfu-programmer at32uc3b1256 dump > ${data}/dump.bin`, showProcessOutput);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
-        execWin(`dfu-programmer at32uc3b1256 dump > ${data}/dump.bin`, showProcessOutput);
+        execWin(`dfu-programmer at32uc3b1256 dump --quiet > ${data}/dump.bin`, showProcessOutput);
     }
 });
 
@@ -98,7 +75,7 @@ $("#erasebtn").click(function(){
     } else if (process.platform === 'linux') {
         exec("dfu-programmer at32uc3b1256 erase", showProcessOutput);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
-        execWin("dfu-programmer at32uc3b1256 erase", showProcessOutput);
+        execWin("dfu-programmer at32uc3b1256 erase --quiet", showProcessOutput);
     } else {
         checkOutput("Error erasing Ducky.")
     }
@@ -138,13 +115,12 @@ ipcRenderer.on('return-app-paths',function(event,data){
 
 ipcRenderer.on('returnDialogMainOpenFile', function(event,data){
     disableButtons();
-    //console.log("parameters from the dialog:",data);
     if (process.platform === 'darwin') {
         exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
     } else if (process.platform === 'linux') {
         exec(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
-
+        execWin(`dfu-programmer at32uc3b1256 flash --suppress-bootloader-mem ${data}`, showProcessOutput);
     } else {
         checkOutput("Error updating Ducky.");
     }
@@ -158,7 +134,7 @@ $("#dresetbtn, #uresetbtn").click(function(){
     } else if (process.platform === 'linux') {
         exec("dfu-programmer at32uc3b1256 reset", showProcessOutput);
     } else if (process.platform === 'win32' || process.platform === 'win64') {
-
+        execWin("dfu-programmer at32uc3b1256 reset --quiet", showProcessOutput);
     } else {
         checkOutput("Error resetting Ducky");
     }

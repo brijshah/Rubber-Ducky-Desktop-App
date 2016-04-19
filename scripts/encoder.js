@@ -41,7 +41,6 @@ ipcRenderer.on('return-home-path', function(event, data) {
             checkCreateBtnState(true);
             err = stderr || err;
             if (err) { return alert("There was an error: " + err); }
-            //console.log(stdout);
             if (stdout) {
                 $("#message").text(stdout);
                 $("#message2").text("Files written to: " + homePath);
