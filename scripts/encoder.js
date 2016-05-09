@@ -38,6 +38,7 @@ ipcRenderer.on('return-home-path', function(event, data) {
             return alert("There was an error: " + err.message);
         }
         exec(`java -jar encoder.jar -i ${data}/inject.txt -o ${data}/inject.bin`, function(err, stdout, stderr) {
+        //exec(`java -jar ${process.resourcesPath}/app/encoder.jar -i ${data}/inject.txt -o ${data}/inject.bin`, function(err, stdout, stderr) {
             checkCreateBtnState(true);
             err = stderr || err;
             if (err) { return alert("There was an error: " + err); }

@@ -28,8 +28,15 @@ $("#filepath").click(function(e) {
         ipcRenderer.send('main-open-file',args);
         ipcRenderer.on('returnDialogMainOpenFile', function(event,data){
             //console.log(data[0]);
+            //Uncomment line below for development use.
             exec(`python DuckDecoder.py decode ${data[0]}`, function(err, stdout, stderr) {
+            //the line below is for packaged app use
+            // exec(`python ${process.resourcesPath}/app/DuckDecoder.py decode ${data[0]}`, function(err, stdout, stderr) {
+                console.log("inside exec")
                 $("#duckscript").val(stdout);
+                console.log(err);
+                console.log(stdout);
+                console.log(stderr);
             });
         });
     });

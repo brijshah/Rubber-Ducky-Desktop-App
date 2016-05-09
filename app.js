@@ -11,7 +11,7 @@ var dialogWindow = null;
 
 app.on('ready', function() {
     var mainWindow = new BrowserWindow({
-        title: 'URB',
+        title: 'USB Rubber Ducky',
         width: 800,
         height: 600,
         'titleBarStyle': 'hidden'
@@ -81,18 +81,20 @@ app.on('ready', function() {
     ];
     Menu.setApplicationMenu(Menu.buildFromTemplate(toolbar));
 
-    ipcMain.on('get-app-paths',function(event,arg) {
+    ipcMain.on('get-app-paths',function(event) {
+
         var arr = {
-            "home"        : app.getPath("home"),
-            "appData"     : app.getPath("appData"),
-            "userData"    : app.getPath("userData"),
-            "cache"       : app.getPath("cache"),
-            "userCache"   : app.getPath("userCache"),
-            "temp"        : app.getPath("temp"),
-            "userDesktop" : app.getPath("userDesktop"),
-            "exe"         : app.getPath("exe"),
-            "module"      : app.getPath("module")
+            home        : app.getPath("home"),
+            appData     : app.getPath("appData"),
+            userData    : app.getPath("userData"),
+            cache       : app.getPath("cache"),
+            userCache   : app.getPath("userCache"),
+            temp        : app.getPath("temp"),
+            userDesktop : app.getPath("userDesktop"),
+            exe         : app.getPath("exe"),
+            module      : app.getPath("module")
         };
+
         event.sender.send('return-app-paths',arr);
     });
 
@@ -115,3 +117,22 @@ app.on('window-all-closed', function () {
     app.quit();
   }
 });
+
+// // OSX only callback - takes care of spawning
+// // a new app window if needed
+// app.on('activate', function()
+// {
+//     if (mainWindow == null)
+//     {
+//         mainWindow = new BrowserWindow({
+//         title: 'USB Rubber Ducky',
+//         width: 800,
+//         height: 600,
+//         'titleBarStyle': 'hidden'
+//         });
+//         mainWindow.loadURL('file://'+__dirname+'/index.html');
+//         mainWindow.on('closed', function() {
+//             mainWindow = null;
+//         });
+//     }
+// });
