@@ -27,7 +27,7 @@ if (process.platform === 'linux'){
 
 $("#mountbutton").click(function(e) {
     e.preventDefault();
-    exec(`mount /dev/$volumeName1 /mnt`);
+    exec("mount /dev/" + $volumeName1 + " /mnt");
 });
 
 $("#unmountbutton").click(function(e) {
